@@ -3,6 +3,7 @@ var app = angular.module('contributions', []);
 app.controller('ContributionController', function($scope, $http) {
   $scope.messages = {};
   $scope.options = {
+    query: '',
     username: 'yannickoo',
   };
 

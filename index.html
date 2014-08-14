@@ -20,7 +20,7 @@
     <div class="container">
       <div id="contributions">
 
-        <div class="alert alert-danger" role="alert" ng-if="messages.error">{{ messages.error }}</div>
+        <div class="alert alert-danger" role="alert" ng-show="messages.error">{{ messages.error }}</div>
 
         <form class="form-inline" ng-submit="updateUsername()">
           <div class="form-group">
@@ -29,31 +29,35 @@
           <button type="submit" class="btn btn-default">update</button>
         </form>
 
-        <form ng-if="user.repos.length" id="repository-options">
-          <input type="text" class="form-control" placeholder="Filter repositories…" ng-model="query">
+        <form ng-show="user.repos.length" id="repository-options">
+          <input type="text" class="form-control" placeholder="Filter repositories…" ng-model="options.query">
         </form>
 
-        <h2 ng-if="user.repos">{{ user.repos.length }} repositories</h2>
-        <table class="table table-striped" ng-if="user.repos">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Homepage</th>
-              <th>Download</th>
-              <th>Git clone</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="repo in user.repos | filter:query">
-              <td><a href="{{ repo.html_url }}">{{ repo.name }}</a></td>
-              <td>{{ repo.description }}</td>
-              <td><a href="{{ repo.homepage }}" class="icon" ng-if="repo.homepage">🏠</a></td>
-              <td><a href="{{ repo.html_url + '/archive/' + repo.default_branch + '.zip' }}" class="icon">↓</a></td>
-              <td><input type="text" value="git clone {{ repo.clone_url }}" class="form-control git-clone"></td>
-            </tr>
-          </tbody>
-        </table>
+        <div id="repository-results" ng-show="filtered.length">
+          <h2 ng-show="filtered.length === 1">1 repository</h2>
+          <h2 ng-show="filtered.length !== 1">{{ filtered.length }} repositories</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Homepage</th>
+                <th>Download</th>
+                <th>Git clone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="repo in filtered = (user.repos | filter:options.query | orderBy:'-pushed_at')">
+                <td><a href="{{ repo.html_url }}">{{ repo.name }}</a></td>
+                <td>{{ repo.description }}</td>
+                <td><a href="{{ repo.homepage }}" class="icon" ng-show="repo.homepage">🏠</a></td>
+                <td><a href="{{ repo.html_url + '/archive/' + repo.default_branch + '.zip' }}" class="icon">↓</a></td>
+                <td><input type="text" value="git clone {{ repo.clone_url }}" class="form-control git-clone"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </body>
