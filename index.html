@@ -12,8 +12,8 @@
     <div class="navbar navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#" ng-if="!user.name">Contributions</a>
-          <a class="navbar-brand user" href="#" ng-if="user.name"><img ng-src="{{ user.avatar_url }}" alt="{{ user.name }}" ng-if="user.avatar_url" style="max-width: 30px;"> {{ user.name }}'s contributions</a>
+          <a class="navbar-brand" href="#" ng-hide="user.name">Contributions</a>
+          <a class="navbar-brand user" href="{{ user.html_url }}" ng-show="user.name"><img ng-src="{{ user.avatar_url }}" alt="{{ user.name }}" ng-if="user.avatar_url" style="max-width: 30px;">{{ user.name }}'s contributions</a>
         </div>
       </div>
     </div>
