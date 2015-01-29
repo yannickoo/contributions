@@ -59,6 +59,31 @@
           </table>
         </div>
 
+        <div id="starred-repos" ng-show="filtered.length">
+          <h2 ng-show="filtered.length === 1">1 starred repository</h2>
+          <h2 ng-show="filtered.length !== 1">{{ filtered.length }} starred repositories</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Homepage</th>
+                <th>Download</th>
+                <th>Clone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="repo in filtered = (user.starred | filter:options.query | orderBy:'-pushed_at')">
+                <td><a href="{{ repo.html_url }}">{{ repo.name }}</a></td>
+                <td>{{ repo.description }}</td>
+                <td><a href="{{ repo.homepage }}" class="icon" ng-show="repo.homepage">🏠</a></td>
+                <td><a href="{{ repo.html_url + '/archive/' + repo.default_branch + '.zip' }}" class="icon">↓</a></td>
+                <td><input type="text" value="git clone {{ repo.clone_url }}" class="form-control git-clone"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
     <a href="https://github.com/yannickoo/contributions"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>

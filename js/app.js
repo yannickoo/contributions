@@ -25,6 +25,14 @@ app.controller('ContributionController', function($scope, $http) {
 
         $scope.user.repos = repos;
       });
+
+      $http.get('https://api.github.com/users/' + $scope.options.username + '/starred').success(function(repos) {
+        if (!repos.length) {
+          return;
+        }
+
+        $scope.user.starred = repos;
+      });
     }).error(function(data, status) {
       $scope.messages.error = data.message + ' (' + status + ')';
       $scope.user = {};
