@@ -42,6 +42,7 @@
               <tr>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Stars</th>
                 <th>Homepage</th>
                 <th>Download</th>
                 <th>Clone</th>
@@ -51,6 +52,7 @@
               <tr ng-repeat="repo in filtered = (user.repos | filter:options.query | orderBy:'-pushed_at')">
                 <td><a href="{{ repo.html_url }}">{{ repo.name }}</a></td>
                 <td>{{ repo.description }}</td>
+                <td>{{ hideZero(repo.stargazers_count).toLocaleString() }}</td>
                 <td><a href="{{ repo.homepage }}" class="icon" ng-show="repo.homepage">🏠</a></td>
                 <td><a href="{{ repo.html_url + '/archive/' + repo.default_branch + '.zip' }}" class="icon">↓</a></td>
                 <td><input type="text" value="git clone {{ repo.clone_url }}" class="form-control git-clone"></td>
@@ -67,6 +69,7 @@
               <tr>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Stars</th>
                 <th>Homepage</th>
                 <th>Download</th>
                 <th>Clone</th>
@@ -76,6 +79,7 @@
               <tr ng-repeat="repo in filtered = (user.starred | filter:options.query | orderBy:'-pushed_at')">
                 <td><a href="{{ repo.html_url }}">{{ repo.name }}</a></td>
                 <td>{{ repo.description }}</td>
+                <td>{{ hideZero(repo.stargazers_count).toLocaleString() }}</td>
                 <td><a href="{{ repo.homepage }}" class="icon" ng-show="repo.homepage">🏠</a></td>
                 <td><a href="{{ repo.html_url + '/archive/' + repo.default_branch + '.zip' }}" class="icon">↓</a></td>
                 <td><input type="text" value="git clone {{ repo.clone_url }}" class="form-control git-clone"></td>

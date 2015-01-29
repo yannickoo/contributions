@@ -40,4 +40,7 @@ app.controller('ContributionController', function($scope, $http) {
     });
   };
 
+  $scope.hideZero = function(number) {
+    return number > 0 ? number : '';
+  };
 });
