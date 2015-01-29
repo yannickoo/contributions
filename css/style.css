@@ -30,3 +30,7 @@ a.navbar-brand.user > img {
 a.icon {
   font-size: 26px;
 }
+
+a.icon:hover {
+  text-decoration: none;
+}
