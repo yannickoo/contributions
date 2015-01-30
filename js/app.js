@@ -12,7 +12,7 @@ app.directive('selectOnClick', function() {
   };
 });
 
-app.controller('ContributionController', function($scope, $http) {
+app.controller('ContributionController', function($scope, $http, $sce) {
   $scope.user = {};
   $scope.messages = {};
   $scope.options = {
@@ -26,9 +26,21 @@ app.controller('ContributionController', function($scope, $http) {
 
   $scope.githubUser = $scope.github.getUser();
 
+  $scope.trust = function(html) {
+    return $sce.trustAsHtml(html);
+  };
+
   $scope.hideZero = function(number) {
     return number > 0 ? number : '';
   };
+
+  $scope.emoji = function(text) {
+    emoji.text_mode = false;
+    emoji.replace_mode = 'unified';
+    var text = emoji.replace_colons(text);
+
+    return text;
+  }
 
   $scope.updateUsername = function() {
     if (typeof $scope.user.name !== 'undefined' && $scope.user.name === $scope.options.username) {
