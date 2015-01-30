@@ -1,19 +1,9 @@
 var app = angular.module('contributions', []);
 
-app.directive('selectOnClick', function() {
-  return {
-    restrict: 'A',
-    link: function (scope, element, attrs) {
-      element.on('click', function() {
-        debugger;
-        this.select();
-      });
-    }
-  };
-});
-
 app.controller('ContributionController', function($scope, $http, $sce) {
-  $scope.user = {};
+  $scope.user = { name: 'Contributions' };
+  $scope.reposLoading = false;
+  $scope.starredLoading = false;
   $scope.messages = {};
   $scope.options = {
     query: '',
@@ -35,17 +25,18 @@ app.controller('ContributionController', function($scope, $http, $sce) {
   };
 
   $scope.emoji = function(text) {
-    emoji.text_mode = false;
-    emoji.replace_mode = 'unified';
-    var text = emoji.replace_colons(text);
+    if (text) {
+      emoji.text_mode = false;
+      emoji.replace_mode = 'unified';
+
+      return emoji.replace_colons(text);
+    }
 
     return text;
   }
 
   $scope.updateUsername = function() {
-    if (typeof $scope.user.name !== 'undefined' && $scope.user.name === $scope.options.username) {
-      return;
-    }
+    $scope.repos = $scope.starred = {};
 
     $scope.githubUser.show($scope.options.username, function(err, res) {
       if (err) {
@@ -56,26 +47,35 @@ app.controller('ContributionController', function($scope, $http, $sce) {
       else {
         $scope.user = res;
         $scope.user.name = typeof res.name !== 'undefined' ? res.name : res.login;
+        $scope.reposLoading = true;
+        $scope.starredLoading = true;
+        $scope.$apply();
 
         $scope.githubUser.userRepos($scope.options.username, function(err, res) {
+          $scope.reposLoading = false;
+
           if (err) {
             $scope.messages.error = data.message + ' (' + status + ')';
             $scope.options.username = '';
           }
           else {
             $scope.messages = {};
-            $scope.user.repos = res;
+            $scope.repos = res;
+            $scope.$apply();
           }
         });
 
         $scope.githubUser.userStarred($scope.options.username, function(err, res) {
+          $scope.starredLoading = false;
+
           if (err) {
             $scope.messages.error = data.message + ' (' + status + ')';
             $scope.options.username = '';
           }
           else {
             $scope.messages = {};
-            $scope.user.starred = res;
+            $scope.starred = res;
+            $scope.$apply();
           }
         });
       }
