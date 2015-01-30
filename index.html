@@ -63,9 +63,9 @@
           </table>
         </div>
 
-        <div id="starred-repos" ng-show="filtered.length">
-          <h2 ng-show="filtered.length === 1">1 starred repository</h2>
-          <h2 ng-show="filtered.length !== 1">{{ filtered.length }} starred repositories</h2>
+        <div id="starred-repos" ng-show="starredFiltered.length">
+          <h2 ng-show="starredFiltered.length === 1">1 starred repository</h2>
+          <h2 ng-show="starredFiltered.length !== 1">{{ starredFiltered.length }} starred repositories</h2>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -78,7 +78,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="repo in filtered = (user.starred | filter:options.query | orderBy:'-pushed_at')">
+              <tr ng-repeat="repo in starredFiltered = (user.starred | filter:options.query | orderBy:'-pushed_at')">
                 <td><a href="{{ repo.html_url }}">{{ repo.name }}</a></td>
                 <td>{{ repo.description }}</td>
                 <td>{{ hideZero(repo.stargazers_count).toLocaleString() }}</td>
