@@ -38,49 +38,42 @@
           <input type="text" class="form-control" placeholder="Filter repositories…" ng-model="options.query">
         </form>
 
-        <div id="repository-results" class="repos" ng-show="filtered.length">
-          <h2 ng-show="filtered.length === 1">1 repository</h2>
-          <h2 ng-show="filtered.length !== 1">{{ filtered.length }} repositories</h2>
-          <ul>
-            <li class="repo" ng-repeat="repo in filtered = (user.repos | filter:options.query | orderBy:'-pushed_at')" ng-class="repo.description ? '' : 'no-desc'">
-                <span class="repo-icon octicon octicon-repo"></span>
-                <span class="name"><a href="{{ repo.html_url }}">{{ repo.name }}</a></span>
-                <p ng-show="repo.description" ng-bind-html="trust(emoji(repo.description))"></p>
-                <span class="stars" ng-show="repo.stargazers_count">{{ hideZero(repo.stargazers_count).toLocaleString() }} <span class="octicon octicon-star"></span></span>
-                <div class="links">
-                  <span><a href="{{ repo.homepage }}" class="icon" ng-show="repo.homepage">🏠</a></span>
-                  <span><a href="{{ repo.html_url + '/archive/' + repo.default_branch + '.zip' }}" class="icon">↓</a></span>
-                <!--<input type="text" value="git clone {{ repo.clone_url }}" class="form-control git-clone"></td>-->
-              </div>
-            </li>
-          </ul>
-        </div>
+        <div>
+          <div id="repository-results" class="repos" ng-show="filtered.length">
+            <h2 ng-show="filtered.length === 1">1 repository</h2>
+            <h2 ng-show="filtered.length !== 1">{{ filtered.length }} repositories</h2>
+            <ul>
+              <li class="repo" ng-repeat="repo in filtered = (user.repos | filter:options.query | orderBy:'-pushed_at')" ng-class="repo.description ? '' : 'no-desc'">
+                  <span class="repo-icon octicon octicon-repo"></span>
+                  <span class="name"><a href="{{ repo.html_url }}">{{ repo.name }}</a></span>
+                  <p ng-show="repo.description" ng-bind-html="trust(emoji(repo.description))"></p>
+                  <span class="stars" ng-show="repo.stargazers_count">{{ hideZero(repo.stargazers_count).toLocaleString() }} <span class="octicon octicon-star"></span></span>
+                  <div class="links">
+                    <span><a href="{{ repo.homepage }}" class="icon" ng-show="repo.homepage">🏠</a></span>
+                    <span><a href="{{ repo.html_url + '/archive/' + repo.default_branch + '.zip' }}" class="icon">↓</a></span>
+                  <!--<input type="text" value="git clone {{ repo.clone_url }}" class="form-control git-clone"></td>-->
+                </div>
+              </li>
+            </ul>
+          </div>
 
-        <div id="starred-repos" ng-show="starredFiltered.length">
-          <h2 ng-show="starredFiltered.length === 1">1 starred repository</h2>
-          <h2 ng-show="starredFiltered.length !== 1">{{ starredFiltered.length }} starred repositories</h2>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Stars</th>
-                <th>Homepage</th>
-                <th>Download</th>
-                <th>Clone</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="repo in starredFiltered = (user.starred | filter:options.query | orderBy:'-pushed_at')">
-                <td><a href="{{ repo.html_url }}">{{ repo.name }}</a></td>
-                <td>{{ repo.description }}</td>
-                <td>{{ hideZero(repo.stargazers_count).toLocaleString() }}</td>
-                <td><a href="{{ repo.homepage }}" class="icon" ng-show="repo.homepage">🏠</a></td>
-                <td><a href="{{ repo.html_url + '/archive/' + repo.default_branch + '.zip' }}" class="icon">↓</a></td>
-                <td><input type="text" value="git clone {{ repo.clone_url }}" class="form-control git-clone"></td>
-              </tr>
-            </tbody>
-          </table>
+          <div id="starred-repos" class="repos" ng-show="starredFiltered.length">
+            <h2 ng-show="starredFiltered.length === 1">1 starred repository</h2>
+            <h2 ng-show="starredFiltered.length !== 1">{{ starredFiltered.length }} starred repositories</h2>
+            <ul>
+              <li class="repo" ng-repeat="repo in starredFiltered = (user.starred | filter:options.query | orderBy:'-pushed_at')" ng-class="repo.description ? '' : 'no-desc'">
+                  <span class="repo-icon octicon octicon-repo"></span>
+                  <span class="name"><a href="{{ repo.html_url }}">{{ repo.name }}</a></span>
+                  <p ng-show="repo.description" ng-bind-html="trust(emoji(repo.description))"></p>
+                  <span class="stars" ng-show="repo.stargazers_count">{{ hideZero(repo.stargazers_count).toLocaleString() }} <span class="octicon octicon-star"></span></span>
+                  <div class="links">
+                    <span><a href="{{ repo.homepage }}" class="icon" ng-show="repo.homepage">🏠</a></span>
+                    <span><a href="{{ repo.html_url + '/archive/' + repo.default_branch + '.zip' }}" class="icon">↓</a></span>
+                  <!--<input type="text" value="git clone {{ repo.clone_url }}" class="form-control git-clone"></td>-->
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
 
       </div>

@@ -42,13 +42,19 @@ a.icon:hover {
 }
 
 .repos {
-  display: block;
+  display: inline-block;
   width: 355px;
+  margin-left: 16px;
+  vertical-align: top;
   background-color: #f5f5f5;
   border-radius: 3px;
   border: 1px solid #d8d8d8;
   font-size: 14px;
   line-height: 17px;
+}
+
+.repos:first-child {
+  margin-left: 0;
 }
 
 .repos h2 {
