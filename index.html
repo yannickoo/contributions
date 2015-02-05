@@ -67,7 +67,7 @@
             <h2 ng-show="starredFiltered.length === 1">1 starred repository</h2>
             <h2 ng-show="starredFiltered.length !== 1">{{ starredFiltered.length }} starred repositories</h2>
             <ul>
-              <li class="repo" ng-repeat="repo in starredFiltered = (starred | filter:options.query | orderBy:['-stargazers_count', '-pushed_at'])" ng-class="repo.description ? '' : 'no-desc'">
+              <li class="repo" ng-repeat="repo in starredFiltered = (starred | filter:options.query)" ng-class="repo.description ? '' : 'no-desc'">
                 <span class="repo-icon octicon octicon-repo"></span>
                 <span class="name"><a href="{{ repo.html_url }}">{{ repo.name }}</a></span>
                 <p ng-show="repo.description" ng-bind-html="trust(emoji(repo.description))"></p>
